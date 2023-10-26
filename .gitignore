@@ -1,0 +1,23 @@
+__pycache__/
+**.py[cod]
+**$py.class
+
+# mypy
+.mypy_cache/
+
+# Pytest
+.pytest_cache/
+
+# vscode
+.vscode/
+
+# PyCharm
+.idea/
+
+# Build
+build/
+dcflags.egg-info/
+dist/
+
+# OS X
+**/.DS_Store

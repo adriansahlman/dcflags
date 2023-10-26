@@ -1,0 +1,38 @@
+name: Release
+
+on: workflow_dispatch
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: verify package version
+        run: sh validate_version.sh
+      - name: set up Python 3.8
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.8
+      - name: install dependencies
+        run: |
+          python -m pip install --upgrade pip build setuptools wheel twine
+          python -m pip install -r requirements-dev.txt
+      - name: flake8 linting
+        run: flake8 dcflags
+      - name: mypy linting
+        run: mypy dcflags
+      - name: black linting
+        uses: psf/black@stable
+        with:
+          options: "--check"
+          src: "dcflags"
+      - name: build
+        run: python -m build --no-isolation
+      - name: publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
