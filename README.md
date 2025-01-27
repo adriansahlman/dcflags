@@ -1,6 +1,7 @@
 # dcflags
 
-Python package for initializing a dataclass with values from the command line and from environmental variables.
+Python package for initializing a dataclass with arguments from the command line or values from environmental variables.
+Meant to work as an entrypoint for applications, nothing else.
 
 ## Install
 

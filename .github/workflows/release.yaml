@@ -25,10 +25,7 @@ jobs:
       - name: mypy linting
         run: mypy dcflags
       - name: black linting
-        uses: psf/black@stable
-        with:
-          options: "--check"
-          src: "dcflags"
+        run: python -m black --check dcflags
       - name: build
         run: python -m build --no-isolation
       - name: publish to PyPI
