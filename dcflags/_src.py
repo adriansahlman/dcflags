@@ -216,7 +216,7 @@ def parse(
 
 
 def _to_type(t: Type[T], v: Any, depth: int = 0) -> T:
-    if t is None or issubclass(t, type(None)):
+    if _is_none(t):
         if not v:
             return typing.cast(T, None)
         if str(v).lower() in ("none", "null"):
@@ -234,7 +234,7 @@ def _to_type(t: Type[T], v: Any, depth: int = 0) -> T:
         vv = None
         is_optional = False
         for t_ in typing.get_args(t):
-            if t_ is None or issubclass(t_, type(None)):
+            if _is_none(t_):
                 is_optional = True
                 continue
             try:
@@ -277,3 +277,7 @@ def _is_union(t: Any) -> bool:
     if typing.get_origin(t) is typing.Union:
         return True
     return isinstance(typing.get_origin(t), T)
+
+
+def _is_none(t: Any) -> bool:
+    return t is None or t is type(None)  # noqa: E721
